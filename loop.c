@@ -18,7 +18,6 @@ int loop_setup(const char *backing_file, char *loop_device) {
   devnr = ioctl(control_fd, LOOP_CTL_GET_FREE);
   if (devnr < 0 || devnr > 999) {
     err = -2;
-    printf("\nErr: LOOP_CTL_GET_FREE %i, %i\n", devnr, errno);
     goto fail_controlfd;
   }
 
@@ -35,7 +34,6 @@ int loop_setup(const char *backing_file, char *loop_device) {
 
   err = ioctl(loop_device_fd, LOOP_SET_FD, backing_file_fd);
   if (err < 0) {
-    puts("\nErr: LOOP_SET_FD");
     errno = -err;
     err = -5;
   }
